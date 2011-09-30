@@ -14,25 +14,35 @@ var REMOVE_LANG_PROPERTY = 1;
 main();
 
 function main() {
-  window.opera.addEventListener('BeforeCSS', fixCSS, false);
-  document.addEventListener('DOMContentLoaded', fixDOM, false);
+  window.opera.addEventListener('BeforeCSS', fixContent, false);
+  window.opera.addEventListener('BeforeScript', fixContent, false);
+  window.document.addEventListener('DOMContentLoaded', fixDOM, false);
 }
 
-function fixCSS(userJSEvent) {
-  var css = userJSEvent.cssText;
+function fixContent(userJSEvent) {
+  var content = null;
 
+  if(userJSEvent.type == 'BeforeCSS') {
+    content = userJSEvent.cssText;
+  } else if(userJSEvent.type == 'BeforeScript') {
+    content = userJSEvent.element.text;
+  }
   if(FIX_VENDOR_PREFIX == 1) {
-    css = css.replace(/-(moz|ms|webkit|o)-(border|box-shadow|text-overflow)/gi,'$2')
-             .replace(/-(moz|ms|webkit)-(linear-gradient|radial-gradient|transform|transition)/gi,'-o-$2');
+    content = content.replace(/-(moz|ms|webkit|o)-(border|box-shadow|text-overflow)/gi,'$2')
+                     .replace(/-(moz|ms|webkit)-(linear-gradient|radial-gradient|transform|transition)/gi,'-o-$2');
   }
   if(FIX_FIXED_POSITION == 1) {
-    css = css.replace(/(position[^;}]*)fixed/gi,'$1absolute')
-             .replace(/(background[^;}]*)fixed/gi,'$1scroll');
+    content = content.replace(/(position[^;}]*)fixed/gi,'$1absolute')
+                     .replace(/(background[^;}]*)fixed/gi,'$1scroll');
   }
   if(REMOVE_KNOWN_BAD_FONTS == 1) {
-    css = css.replace(/(宋体|黑体|Helvetica Neue|Helvetica)/gi,'Arial')
+    content = content.replace(/(宋体|黑体|Helvetica Neue|Helvetica)/gi,'Arial')
   }
-  userJSEvent.cssText = css;
+  if(userJSEvent.type == 'BeforeCSS') {
+    userJSEvent.cssText = content;
+  } else if(userJSEvent.type == 'BeforeScript') {
+    userJSEvent.element.text = content;
+  }
 }
 
 function fixDOM() {
@@ -50,10 +60,10 @@ function fixDOM() {
     if(FIX_FIXED_POSITION == 1) {
       if(oElement.hasAttribute("style")){
         if(oCurrentStyle.position === 'fixed') {
-          oStyle.setProperty('position', 'absolute', null);
+          oStyle.setProperty('position', 'absolute', 'important');
         }
         if(oCurrentStyle.backgroundAttachment === 'fixed') {
-          oStyle.setProperty('background-attachment', 'scroll', null);
+          oStyle.setProperty('background-attachment', 'scroll', 'important');
         }
       }
     }
@@ -65,7 +75,7 @@ function fixDOM() {
   }
 
   if(FIX_DEAFULT_FONT_FAMILY == 1) {
-    nCSS = document.createTextNode('button, input, keygen, select { font-family: Arial, sans-serif; } code, kbd, pre, samp, textarea { font-family: Consolas, monospace; }')
+    nCSS = document.createTextNode('button, div, input, keygen, select { font-family: Arial, sans-serif; } code, kbd, pre, samp, textarea { font-family: Consolas, monospace; }')
     nStyle = document.createElement('style');
     nStyle.setAttribute('type', 'text/css')
     nStyle.appendChild(nCSS);
