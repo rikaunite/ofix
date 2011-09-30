@@ -1,6 +1,6 @@
 ﻿<widget xmlns="http://www.w3.org/ns/widgets">
   <name>ofix</name>
-  <description>ofix - Convernt CSS vendor prefixes to "-o-" and "fixed" element to "absolute".</description>
+  <description>ofix - Convernt CSS vendor prefixes to "-o-" and "fixed" element to "absolute"...</description>
   <author>rikaunite</author>
   <icon src="images/ofix.png"/>
 </widget>
