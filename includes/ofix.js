@@ -1,85 +1,126 @@
-﻿// ==UserScript==
-// @author rikaunite
-// @description ofix - Convernt CSS vendor prefixes to "-o-" and "fixed" element to "absolute"...
-// ==/UserScript==
+﻿(function() {
 
-(function() {
+var setting = null;
 
-var FIX_VENDOR_PREFIX = 1;
-var FIX_FIXED_POSITION = 1;
-var FIX_DEAFULT_FONT_FAMILY = 1;
-var REMOVE_KNOWN_BAD_FONTS = 1;
-var REMOVE_LANG_PROPERTY = 1;
+doFix()
 
-main();
+opera.extension.addEventListener('message',
+function(event) {
+  if(event.data == 'Give popup your hostname!') {
+    event.ports[0].postMessage({
+      name: 'Here is your hostname!',
+      content: window.location.hostname
+    });
+  }
+},
+false);
 
-function main() {
-  window.opera.addEventListener('BeforeCSS', fixContent, false);
-  window.opera.addEventListener('BeforeScript', fixContent, false);
+function doFix() {
+  window.opera.addEventListener('BeforeCSS', fixCSS, false);
+  window.opera.addEventListener('BeforeScript', fixCSS, false);
   window.document.addEventListener('DOMContentLoaded', fixDOM, false);
 }
 
-function fixContent(userJSEvent) {
-  var content = null;
+function fixCSS(event) {
+  getSetting();
 
-  if(userJSEvent.type == 'BeforeCSS') {
-    content = userJSEvent.cssText;
-  } else if(userJSEvent.type == 'BeforeScript') {
-    content = userJSEvent.element.text;
-  }
-  if(FIX_VENDOR_PREFIX == 1) {
-    content = content.replace(/-(moz|ms|webkit|o)-(border|box-shadow|text-overflow)/gi,'$2')
-                     .replace(/-(moz|ms|webkit)-(linear-gradient|radial-gradient|transform|transition)/gi,'-o-$2');
-  }
-  if(FIX_FIXED_POSITION == 1) {
-    content = content.replace(/(position[^;}]*)fixed/gi,'$1absolute')
-                     .replace(/(background[^;}]*)fixed/gi,'$1scroll');
-  }
-  if(REMOVE_KNOWN_BAD_FONTS == 1) {
-    content = content.replace(/(宋体|黑体|Helvetica Neue|Helvetica)/gi,'Arial')
-  }
-  if(userJSEvent.type == 'BeforeCSS') {
-    userJSEvent.cssText = content;
-  } else if(userJSEvent.type == 'BeforeScript') {
-    userJSEvent.element.text = content;
+  if(setting.enabled == 1) {
+    var content = null;
+
+    if(event.type == 'BeforeCSS') {
+      content = event.cssText;
+    } else if(setting.fixCSSInScripts == 1) {
+      content = event.element.text;
+    } else {
+      return;
+    }
+
+    if(setting.rewriteVendorPrefix == 1) {
+      content = content.replace(/-(moz|ms|webkit|o)-(border|box-shadow|text-overflow)/gi, '$2')
+                       .replace(/-(moz|ms|webkit)-(linear-gradient|radial-gradient|transform|transition)/gi, '-o-$2');
+    }
+
+    if(setting.noFixedPosition == 1) {
+      content = content.replace(/(position[^;}]*)fixed/gi, '$1absolute')
+                       .replace(/(background[^;}]*)fixed/gi, '$1scroll');
+    }
+
+    if(setting.removeBadFonts.enabled == 1) {
+      var pattern = new RegExp('(' + setting.removeBadFonts.fonts.join('|') + ')', 'gi');
+      content = content.replace(pattern, 'Arial')
+    }
+
+    if(event.type == 'BeforeCSS') {
+      event.cssText = content;
+    } else {
+      event.element.text = content;
+    }
   }
 }
 
 function fixDOM() {
-  var oAll = document.all,
-      oElement = null,
-      oCurrentStyle = null,
-      oStyle = null,
-      nCSS = null,
-      nStyle = null;
+  getSetting();
 
-  for(i = 0; i < oAll.length; i++) {
-    oElement = oAll[i];
-    oCurrentStyle = oElement.currentStyle;
-    oStyle = oElement.style;
-    if(FIX_FIXED_POSITION == 1) {
-      if(oElement.hasAttribute("style")){
-        if(oCurrentStyle.position === 'fixed') {
-          oStyle.setProperty('position', 'absolute', 'important');
-        }
-        if(oCurrentStyle.backgroundAttachment === 'fixed') {
-          oStyle.setProperty('background-attachment', 'scroll', 'important');
+  if(setting.enabled == 1) {
+    if(setting.noFixedPosition == 1) {
+      var oAll = document.all;
+
+      for(i = 0; i < oAll.length; i++) {
+        var oElement = oAll[i];
+        var oCurrentStyle = oElement.currentStyle;
+        var oStyle = oElement.style;
+
+        if(oElement.hasAttribute("style")){
+          if(oCurrentStyle.position === 'fixed') {
+            oStyle.setProperty('position', 'absolute', 'important');
+          }
+          if(oCurrentStyle.backgroundAttachment === 'fixed') {
+            oStyle.setProperty('background-attachment', 'scroll', 'important');
+          }
         }
       }
     }
-    if(REMOVE_LANG_PROPERTY == 1) {
-      if(oElement.hasAttribute("lang")){
-        oElement.removeAttribute("lang")
+
+    if(setting.removeLangProperty == 1) {
+      if(document.all[0].hasAttribute("lang")){
+        document.all[0].removeAttribute("lang")
       }
+      if(document.body.hasAttribute("lang")){
+        document.body.removeAttribute("lang")
+      }
+    }
+
+    if(setting.addDefaultFontFamily.enabled == 1) {
+      var normal = setting.addDefaultFontFamily.normal
+      var monospace = setting.addDefaultFontFamily.monospace
+      var addCSS = document.createTextNode('button, div, input, keygen, select { font-family: ' + normal + ', sans-serif; } code, kbd, pre, samp, textarea { font-family: ' + monospace + ', monospace; }')
+      var addStyle = document.createElement('style');
+
+      addStyle.setAttribute('type', 'text/css')
+      addStyle.appendChild(addCSS);
+      document.head.insertBefore(addStyle, document.head.firstChild);
     }
   }
+}
 
-  if(FIX_DEAFULT_FONT_FAMILY == 1) {
-    nCSS = document.createTextNode('button, div, input, keygen, select { font-family: Arial, sans-serif; } code, kbd, pre, samp, textarea { font-family: Consolas, monospace; }')
-    nStyle = document.createElement('style');
-    nStyle.setAttribute('type', 'text/css')
-    nStyle.appendChild(nCSS);
-    document.head.insertBefore(nStyle, document.head.firstChild);
+function getSetting(){
+  if(setting == null) {
+    for(var i = 0; i < widget.preferences.length; i++) {
+      var key = widget.preferences.key(i);
+      var hostname = window.location.hostname;
+      var index = hostname.indexOf(key);
+
+      if(index + key.length == hostname.length && hostname[index - 1] == '.') {
+        setting = JSON.parse(widget.preferences.getItem(key));
+      } else if (hostname == key) {
+        setting = JSON.parse(widget.preferences.getItem(hostname));
+        return;
+      } else {
+        if(setting == null) {
+          setting = JSON.parse(widget.preferences.getItem('default'));
+        }
+      }
+    }
   }
 }
 

@@ -1,0 +1,41 @@
+﻿body {
+  border-color: black;
+  border-radius: 3px;
+  border-style: solid;
+  border-width: 1px;
+  display: block;
+  font-family: Arial, sans-serif;
+  margin: 0px;
+  padding-bottom: 5px;
+  text-align: center;
+}
+
+#title {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+div.preferences {
+  border-color: black;
+  border-radius: 3px;
+  border-style: solid;
+  border-width: 1px;
+  margin: 5px;
+  padding-bottom: 1px;
+  padding-left: 3px;
+  padding-right: 3px;
+  text-align: left;
+}
+
+label.preferences {
+  font-size: 0.8em;
+}
+
+input.preferences {
+  border-color: black;
+  border-radius: 3px;
+  border-style: solid;
+  border-width: 1px;
+  position: absolute;
+  right: 8px;
+}

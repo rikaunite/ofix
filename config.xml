@@ -1,6 +1,8 @@
 ﻿<widget xmlns="http://www.w3.org/ns/widgets">
   <name>ofix</name>
-  <description>ofix - Convernt CSS vendor prefixes to "-o-" and "fixed" element to "absolute"...</description>
-  <author>rikaunite</author>
-  <icon src="images/ofix.png"/>
+  <description>ofix - Convernt CSS vendor prefixes to "-o-" and "fixed" element to "absolute" and others...</description>
+  <author email="jiongtl@gmail.com">rikaunite</author>
+  <icon src="images/icon.png" />
+  <preference name="twitter.com" value="" />
+  <preference name="default" value="" />
 </widget>
