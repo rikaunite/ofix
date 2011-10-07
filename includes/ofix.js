@@ -46,8 +46,10 @@ function fixCSS(event) {
     }
 
     if(setting.removeBadFonts.enabled == 1) {
-      var pattern = new RegExp('(' + setting.removeBadFonts.fonts.join('|') + ')', 'gi');
-      content = content.replace(pattern, 'Arial')
+      if(setting.removeBadFonts.fonts.length != 0) {
+        var pattern = new RegExp('(' + setting.removeBadFonts.fonts.join('|') + ')', 'gi');
+        content = content.replace(pattern, 'Arial')
+      }
     }
 
     if(event.type == 'BeforeCSS') {

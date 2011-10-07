@@ -7,33 +7,37 @@
   </head>
   <body>
     <p id="title">Quick Preferences</p>
-    <div class="preferences">
-    <label class="preferences">Enabled</label>
-    <input class="preferences" class type="checkbox" onclick=""></input>
-    </div>
-    <div class="preferences">
-    <label class="preferences">Rewrite Vendor Prefix</label>
-    <input class="preferences" class type="checkbox" onclick=""></input>
-    </div>
-    <div class="preferences">
-    <label class="preferences">No Fixed Position</label>
-    <input class="preferences" class type="checkbox" onclick=""></input>
-    </div>
-    <div class="preferences">
-    <label class="preferences">Add Default Font Family</label>
-    <input class="preferences" class type="checkbox" onclick=""></input>
-    </div>
-    <div class="preferences">
-    <label class="preferences">Remove Bad Fonts</label>
-    <input class="preferences" class type="checkbox" onclick=""></input>
-    </div>
-    <div class="preferences">
-    <label class="preferences">Fix CSS In Scripts</label>
-    <input class="preferences" class type="checkbox" onclick=""></input>
-    </div>
-    <div class="preferences">
-    <label class="preferences">Remove Lang Property</label>
-    <input class="preferences" class type="checkbox" onclick=""></input>
+    <div id="preferences">
+      <label>
+        Enabled
+        <input id="enabled" type="checkbox" onchange="saveSetting()" />
+      </label>
+      <div>
+        <label>
+          Rewrite Vendor Prefix
+          <input id="rewrite_vendor_prefix" type="checkbox" onchange="saveSetting()" />
+        </label>
+        <label>
+          No Fixed Position
+          <input id="no_fixed_position" type="checkbox" onchange="saveSetting()" />
+        </label>
+        <label>
+          Add Default Font Family
+          <input id="add_default_font_family" type="checkbox" onchange="saveSetting()" />
+        </label>
+        <label>
+          Remove Bad Fonts
+          <input id="remove_bad_fonts" type="checkbox" onchange="saveSetting()" />
+        </label>
+        <label>
+          Fix CSS In Scripts
+          <input id="fix_css_in_scripts" type="checkbox" onchange="saveSetting()" />
+        </label>
+        <label>
+          Remove Lang Property
+          <input id="remove_lang_property" type="checkbox" onchange="saveSetting()" >
+        </label>
+      </div>
     </div>
   </body>
 </html>

@@ -1,9 +1,7 @@
 ﻿body {
-  border-color: black;
   border-radius: 3px;
   border-style: solid;
   border-width: 1px;
-  display: block;
   font-family: Arial, sans-serif;
   margin: 0px;
   padding-bottom: 5px;
@@ -15,27 +13,26 @@
   margin-bottom: 10px;
 }
 
-div.preferences {
-  border-color: black;
+#preferences label {
   border-radius: 3px;
   border-style: solid;
   border-width: 1px;
+  display: block;
+  font-size: 0.9em;
   margin: 5px;
-  padding-bottom: 1px;
-  padding-left: 3px;
-  padding-right: 3px;
+  padding: 1px 3px 2px 3px;
   text-align: left;
 }
 
-label.preferences {
-  font-size: 0.8em;
-}
-
-input.preferences {
-  border-color: black;
+#preferences input {
   border-radius: 3px;
   border-style: solid;
   border-width: 1px;
-  position: absolute;
-  right: 8px;
+  float: right;
+  margin-top: 2px;
+}
+
+#preferences div input, #preferences div label {
+  color: #666;
+  border-color: #666;
 }
