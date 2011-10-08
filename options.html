@@ -1,10 +1,69 @@
 ﻿<!DOCTYPE html>
 <html>
   <head>
+    <link href="stylesheets/options.css" type="text/css" rel="stylesheet" />
     <script src="scripts/options.js" type="text/javascript"></script>
     <title>ofix</title>
   </head>
   <body>
     <div id="show"></div>
+    <header>
+      <img src="images/icon.png">
+      <h1>ofix</h1>
+      <h2>Made by rikaunite</h2>
+    </header>
+    <section>
+      <p>Should I write something here?</p>
+      <h3>Manage Site Preferences</h3>
+      <fieldset>
+        <div id="preferences">
+          <label>
+            <input id="enabled" type="checkbox" onchange="saveSetting()" />
+            Enabled
+          </label>
+          <label>
+            <input id="rewrite_vendor_prefix" type="checkbox" onchange="saveSetting()" />
+            Rewrite Vendor Prefix
+          </label>
+          <label>
+            <input id="no_fixed_position" type="checkbox" onchange="saveSetting()" />
+            No Fixed Position
+          </label>
+          <label>
+            <input id="add_default_font_family" type="checkbox" onchange="saveSetting()" />
+            Add Default Font Family
+          </label>
+          <label class="sub_setting">
+            Normal:
+            <input id="mormal_font" type="text" onchange="saveSetting()" />
+          </label>
+          <label class="sub_setting">
+            Monospace:
+            <input id="monospace_font" type="text" onchange="saveSetting()" />
+          </label>
+          <label>
+            <input id="remove_bad_fonts" type="checkbox" onchange="saveSetting()" />
+            Remove Bad Fonts:
+          </label>
+          <label class="sub_setting">
+            Font list:
+            <input id="bad_font_list" type="text" onchange="saveSetting()" />
+          </label>
+          <label>
+            <input id="fix_css_in_scripts" type="checkbox" onchange="saveSetting()" />
+            Fix CSS In Scripts
+          </label>
+          <label>
+            <input id="remove_lang_property" type="checkbox" onchange="saveSetting()" >
+            Remove Lang Property
+          </label>
+        </div>
+        <select id="sites" size="10">
+        </select>
+      </fieldset>
+    </section>
+    <footer>
+      <p>Powered by the Opera Browser</p>
+    </footer>
   </body>
 </html>

@@ -2,7 +2,7 @@
 
 var setting = null;
 
-doFix()
+doFix();
 
 opera.extension.addEventListener('message',
 function(event) {
@@ -47,7 +47,7 @@ function fixCSS(event) {
 
     if(setting.removeBadFonts.enabled == 1) {
       if(setting.removeBadFonts.fonts.length != 0) {
-        var pattern = new RegExp('(' + setting.removeBadFonts.fonts.join('|') + ')', 'gi');
+        var pattern = new RegExp('(' + setting.removeBadFonts.fonts + ')', 'gi');
         content = content.replace(pattern, 'Arial')
       }
     }

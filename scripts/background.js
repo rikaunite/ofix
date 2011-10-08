@@ -12,9 +12,9 @@ if(!widget.preferences.getItem('default')) {
     },
     removeBadFonts: {
       enabled: 0,
-      fonts: []
+      fonts: ''
     },
-    fixCSSInScripts: 0,
+    fixCSSInScripts: 1,
     removeLangProperty: 0
   }));
 }
