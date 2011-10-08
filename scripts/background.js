@@ -25,8 +25,8 @@ var button = opera.contexts.toolbar.createItem({
   icon: 'images/icon_button.png',
   popup: {
     href: 'popup.html',
-    height: 225,
-    width: 200
+    height: 180,
+    width: 225
   }
 });
 
