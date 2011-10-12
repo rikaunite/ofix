@@ -99,7 +99,7 @@ input[type="text"] {
   }
 }
 
-@media all and (max-width: 225px) {
+@media all and (max-width: 250px) {
   body {
     margin: 2px;
     min-width: 200px;
