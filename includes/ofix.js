@@ -36,8 +36,8 @@ function fixCSS(event) {
     }
 
     if(setting.rewriteVendorPrefix == 1) {
-      content = content.replace(/-(moz|ms|webkit|o)-(border|box-shadow|text-overflow)/gi, '$2')
-                       .replace(/-(moz|ms|webkit)-(linear-gradient|radial-gradient|transform|transition)/gi, '-o-$2');
+      content = content.replace(/-(moz|ms|webkit|o)-(border-radius|border-top-right-radius|border-bottom-right-radius|border-bottom-left-radius|border-top-left-radius|box-shadow|text-overflow)/gi, '$2')
+                       .replace(/-(moz|ms|webkit)-(animation|animation-name|animation-duration|animation-timing-function|animation-iteration-count|animation-direction|animation-play-state|animation-delay|animation-fill-mode|keyframes|border-image|linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient|object-fit|object-position|tab-size|table-baseline|transform|transform-origin|transition|transition-property|transition-duration|transition-timing-function|transition-delay)/gi, '-o-$2');
     }
 
     if(setting.noFixedPosition == 1) {
