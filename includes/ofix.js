@@ -29,7 +29,7 @@ function fixCSS(event) {
 
     if(event.type == 'BeforeCSS') {
       content = event.cssText;
-    } else if(setting.fixCSSInScripts == 1) {
+    } else if(event.type == 'BeforeScript' && setting.fixCSSInScripts == 1) {
       content = event.element.text;
     } else {
       return;
@@ -93,11 +93,20 @@ function fixDOM() {
     }
 
     if(setting.addDefaultFontFamily.enabled == 1) {
-      var normal = setting.addDefaultFontFamily.normal
-      var monospace = setting.addDefaultFontFamily.monospace
-      var addCSS = document.createTextNode('button, div, input, keygen, select { font-family: ' + normal + ', sans-serif; } code, kbd, pre, samp, textarea { font-family: ' + monospace + ', monospace; }')
-      var addStyle = document.createElement('style');
+      var normal = '';
+      var monospace = '';
+      var addCSS = null;
+      var addStyle = null;
 
+      if(setting.addDefaultFontFamily.normal.length != 0){
+        normal = setting.addDefaultFontFamily.normal + ', ';
+      }
+      if(setting.addDefaultFontFamily.monospace.length != 0){
+        monospace = setting.addDefaultFontFamily.monospace + ', ';
+      }
+
+      addCSS = document.createTextNode('button, input, keygen, select { font-family: ' + normal + 'sans-serif; } code, kbd, pre, samp, textarea { font-family: ' + monospace + 'monospace; }')
+      addStyle = document.createElement('style');
       addStyle.setAttribute('type', 'text/css')
       addStyle.appendChild(addCSS);
       document.head.insertBefore(addStyle, document.head.firstChild);

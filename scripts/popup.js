@@ -17,14 +17,13 @@ function(event) {
 false);
 
 function loadSetting() {
-  if(setting.enabled == 1) {
-  var elements = document.querySelectorAll('#preferences div input, #preferences div label');
+  if(setting.enabled != 1) {
+    var elements = document.querySelectorAll('.preferences');
 
     for(var i = 0; i < elements.length; i++) {
       var element = elements[i];
 
-      element.style.setProperty('border-color', 'black');
-      element.style.setProperty('color', 'black');
+      element.style.setProperty('color', '#666');
     }
   }
 
@@ -49,21 +48,19 @@ function saveSetting() {
     widget.preferences.setItem(hostname, JSON.stringify(setting));
 
     if(setting.enabled == 1) {
-      var elements = document.querySelectorAll('#preferences div input, #preferences div label');
+      var elements = document.querySelectorAll('.preferences');
 
       for(var i = 0; i < elements.length; i++) {
         var element = elements[i];
 
-        element.style.setProperty('border-color', 'black');
-        element.style.setProperty('color', 'black');
+        element.style.setProperty('color', '#1e3853');
       }
     } else {
-      var elements = document.querySelectorAll('#preferences div input, #preferences div label');
+      var elements = document.querySelectorAll('.preferences');
 
       for(var i = 0; i < elements.length; i++) {
         var element = elements[i];
 
-        element.style.setProperty('border-color', '#666');
         element.style.setProperty('color', '#666');
       }
     }

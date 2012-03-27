@@ -13,7 +13,7 @@ body {
   font-size: 0.9em;
   margin: 15px auto;
   max-width: 700px;
-  min-width: 550px;
+  min-width: 600px;
 }
 
 header {
@@ -74,7 +74,7 @@ fieldset label {
 
 #preferences {
   float: left;
-  width: 250px;
+  width: 300px;
 }
 
 .sub-setting {
@@ -89,6 +89,7 @@ input[type="text"] {
   border-left-style: none;
   border-right-style: none;
   border-top-style: none;
+  color: #1e3853;
   height: 14px;
 }
 

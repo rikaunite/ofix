@@ -31,6 +31,16 @@ function loadSetting(event) {
     hostname = event.target.innerHTML;
   }
 
+  if(setting.enabled != 1) {
+    var elements = document.querySelectorAll('.preferences');
+
+    for(var i = 0; i < elements.length; i++) {
+      var element = elements[i];
+
+      element.style.setProperty('color', '#666');
+    }
+  }
+
   document.getElementById('enabled').checked = (setting.enabled == 1);
   document.getElementById('rewrite_vendor_prefix').checked = (setting.rewriteVendorPrefix == 1);
   document.getElementById('no_fixed_position').checked = (setting.noFixedPosition == 1);
@@ -56,6 +66,24 @@ function saveSetting() {
     setting.fixCSSInScripts = (document.getElementById('fix_css_in_scripts').checked) ? 1 : 0;
     setting.removeLangProperty = (document.getElementById('remove_lang_property').checked) ? 1 : 0;
     widget.preferences.setItem(hostname, JSON.stringify(setting));
+  }
+
+  if(setting.enabled == 1) {
+    var elements = document.querySelectorAll('.preferences');
+
+    for(var i = 0; i < elements.length; i++) {
+      var element = elements[i];
+
+      element.style.setProperty('color', '#1e3853');
+    }
+  } else {
+    var elements = document.querySelectorAll('.preferences');
+
+    for(var i = 0; i < elements.length; i++) {
+      var element = elements[i];
+
+      element.style.setProperty('color', '#666');
+    }
   }
 }
 
